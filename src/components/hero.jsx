@@ -9,7 +9,7 @@ import heroVector5 from '../images/hero_vector5.svg';
 
 const Hero = () => {
   return (
-    <section className="hero">
+    <section className="hero" id="home">
       <div className="hero-container">
         <div className="hero-content">
           <div className="hero-text">
@@ -17,7 +17,7 @@ const Hero = () => {
             <h1 className="hero-name">AKASH GANGURDE</h1>
             <p className="hero-title">UI/UX Designer</p>
             <div className="hero-buttons">
-              <a href="#resume" className="hero-btn resume-btn">Resume</a>
+              <a href="/assets/Akash_Gangurde_Resume.pdf" target="_blank" rel="noopener noreferrer" className="hero-btn resume-btn">Resume</a>
               <a href="#contact" className="hero-btn hire-btn">Hire me</a>
             </div>
           </div>

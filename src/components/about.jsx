@@ -24,6 +24,21 @@ const About = () => {
               </div>
             </div>
             
+            <div className="about-mobile-info">
+              <div className="about-info-item">
+                <span className="info-icon">📧</span>
+                <span className="info-text">Your info here</span>
+              </div>
+              <div className="about-info-item">
+                <span className="info-icon">🌐</span>
+                <span className="info-text">Your info here</span>
+              </div>
+              <div className="about-info-item">
+                <span className="info-icon">📞</span>
+                <span className="info-text">Your info here</span>
+              </div>
+            </div>
+            
             <div className="about-text-section">
               <h3 className="about-name">Akash Gangurde</h3>
               <p className="about-description">
