@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './contact.css';
+import { 
+  fadeInUp, 
+  fadeInLeft, 
+  fadeInRight, 
+  textReveal, 
+  staggerFadeIn, 
+  buttonHover 
+} from '../utils/gsapAnimations';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +21,12 @@ const Contact = () => {
 
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  
+  // Animation refs
+  const titleRef = useRef(null);
+  const formRef = useRef(null);
+  const formGroupsRef = useRef([]);
+  const submitButtonRef = useRef(null);
 
   const countries = [
     { code: '+91', flag: '🇮🇳', name: 'India' },
@@ -37,6 +51,30 @@ const Contact = () => {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Animation useEffect
+  useEffect(() => {
+    // Title animation
+    if (titleRef.current) {
+      textReveal(titleRef.current);
+    }
+
+    // Form animation
+    if (formRef.current) {
+      fadeInUp(formRef.current, 0.3);
+    }
+
+    // Form groups stagger animation
+    if (formGroupsRef.current.length > 0) {
+      staggerFadeIn(formGroupsRef.current.filter(Boolean), 0.5, 1, 0.1);
+    }
+
+    // Submit button animation
+    if (submitButtonRef.current) {
+      fadeInUp(submitButtonRef.current, 1);
+      buttonHover(submitButtonRef.current);
+    }
   }, []);
 
   const getCurrentCountry = () => {
@@ -68,15 +106,15 @@ const Contact = () => {
     <section className="contact-section" id="contact">
       <div className="contact-container">
         <div className="contact-header">
-          <h2 className="contact-title">
+          <h2 ref={titleRef} className="contact-title">
             Contact <span className="contact-title-highlight">Me</span>
           </h2>
         </div>
 
         <div className="contact-form-wrapper">
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
             <div className="form-row">
-              <div className="form-group">
+              <div ref={el => formGroupsRef.current[0] = el} className="form-group">
                 <label htmlFor="fullName" className="form-label">Full Name</label>
                 <input
                   type="text"
@@ -89,7 +127,7 @@ const Contact = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div ref={el => formGroupsRef.current[1] = el} className="form-group">
                 <label htmlFor="email" className="form-label">Email</label>
                 <input
                   type="email"
@@ -105,7 +143,7 @@ const Contact = () => {
             </div>
 
             <div className="form-row">
-              <div className="form-group">
+              <div ref={el => formGroupsRef.current[2] = el} className="form-group">
                 <label htmlFor="phone" className="form-label">Phone Number</label>
                 <div className="phone-input-wrapper">
                   <div 
@@ -148,7 +186,7 @@ const Contact = () => {
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div ref={el => formGroupsRef.current[3] = el} className="form-group">
                 <label htmlFor="subject" className="form-label">Subject</label>
                 <input
                   type="text"
@@ -162,7 +200,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="form-group full-width">
+            <div ref={el => formGroupsRef.current[4] = el} className="form-group full-width">
               <label htmlFor="message" className="form-label">Your Message</label>
               <textarea
                 id="message"
@@ -176,7 +214,7 @@ const Contact = () => {
               ></textarea>
             </div>
 
-            <button type="submit" className="submit-btn">
+            <button ref={submitButtonRef} type="submit" className="submit-btn">
               Submit
             </button>
           </form>

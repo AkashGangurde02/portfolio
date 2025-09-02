@@ -1,14 +1,66 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './about.css';
 import aboutImage from '../images/about_image.svg';
 import aboutVector1 from '../images/about_vector1.svg';
+import { 
+  fadeInUp, 
+  fadeInLeft, 
+  fadeInRight, 
+  scaleIn, 
+  staggerFadeIn, 
+  textReveal, 
+  floatingAnimation 
+} from '../utils/gsapAnimations';
 
 const About = () => {
+  const titleRef = useRef(null);
+  const imageRef = useRef(null);
+  const vector1Ref = useRef(null);
+  const nameRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const infoItemsRef = useRef([]);
+  const skillsColumnsRef = useRef([]);
+  const timelineRef = useRef(null);
+  const mobileInfoRef = useRef(null);
+
+  useEffect(() => {
+    // Title animation
+    textReveal(titleRef.current);
+
+    // Image and vector animations
+    scaleIn(imageRef.current, 0.2);
+    floatingAnimation(vector1Ref.current);
+
+    // Text animations
+    fadeInLeft(nameRef.current, 0.4);
+    fadeInLeft(descriptionRef.current, 0.6);
+
+    // Info items stagger animation
+    if (infoItemsRef.current.length > 0) {
+      staggerFadeIn(infoItemsRef.current, 0.8, 1, 0.2);
+    }
+
+    // Mobile info animation
+    if (mobileInfoRef.current) {
+      fadeInUp(mobileInfoRef.current, 0.8);
+    }
+
+    // Skills columns animation
+    if (skillsColumnsRef.current.length > 0) {
+      staggerFadeIn(skillsColumnsRef.current, 1, 1, 0.3);
+    }
+
+    // Timeline animation
+    if (timelineRef.current) {
+      fadeInRight(timelineRef.current, 1.2);
+    }
+  }, []);
+
   return (
     <section className="about" id="about">
       <div className="about-container">
         <div className="about-header">
-          <h2 className="about-title">
+          <h2 ref={titleRef} className="about-title">
             About <span className="about-title-highlight">Me</span>
           </h2>
         </div>
@@ -16,15 +68,15 @@ const About = () => {
         <div className="about-main-content">
           <div className="about-intro">
             <div className="about-image-section">
-              <div className="about-image-container">
+              <div ref={imageRef} className="about-image-container">
                 <img src={aboutImage} alt="Akash Gangurde" className="about-img" />
               </div>
-              <div className="about-vector1">
+              <div ref={vector1Ref} className="about-vector1">
                 <img src={aboutVector1} alt="Vector 1" className="vector1-img" />
               </div>
             </div>
             
-            <div className="about-mobile-info">
+            <div ref={mobileInfoRef} className="about-mobile-info">
               <div className="about-info-item">
                 <span className="info-icon">📧</span>
                 <span className="info-text">Your info here</span>
@@ -40,8 +92,8 @@ const About = () => {
             </div>
             
             <div className="about-text-section">
-              <h3 className="about-name">Akash Gangurde</h3>
-              <p className="about-description">
+              <h3 ref={nameRef} className="about-name">Akash Gangurde</h3>
+              <p ref={descriptionRef} className="about-description">
                 I'm aspiring UI/UX designer passionate about crafting intuitive, 
                 user-centered digital experiences. I have worked on projects like 
                 CityFix, a civic-tech application, and a responsive grocery store website 
@@ -51,15 +103,15 @@ const About = () => {
               </p>
               
               <div className="about-info">
-                <div className="about-info-item">
+                <div ref={el => infoItemsRef.current[0] = el} className="about-info-item">
                   <span className="info-icon">📧</span>
                   <span className="info-text">Your info here</span>
                 </div>
-                <div className="about-info-item">
+                <div ref={el => infoItemsRef.current[1] = el} className="about-info-item">
                   <span className="info-icon">🌐</span>
                   <span className="info-text">Your info here</span>
                 </div>
-                <div className="about-info-item">
+                <div ref={el => infoItemsRef.current[2] = el} className="about-info-item">
                   <span className="info-icon">📞</span>
                   <span className="info-text">Your info here</span>
                 </div>
@@ -70,7 +122,7 @@ const About = () => {
           <div className="about-bottom-section">
             <div className="about-skills">
               <div className="skills-row">
-                <div className="skills-column">
+                <div ref={el => skillsColumnsRef.current[0] = el} className="skills-column">
                   <h4 className="skills-title">UI Design</h4>
                   <ul className="skills-list">
                     <li>Visual Hierarchy</li>
@@ -81,7 +133,7 @@ const About = () => {
                   </ul>
                 </div>
                 
-                <div className="skills-column">
+                <div ref={el => skillsColumnsRef.current[1] = el} className="skills-column">
                   <h4 className="skills-title">Soft Skills</h4>
                   <ul className="skills-list">
                     <li>Teamwork</li>
@@ -94,7 +146,7 @@ const About = () => {
               </div>
               
               <div className="skills-row">
-                <div className="skills-column">
+                <div ref={el => skillsColumnsRef.current[2] = el} className="skills-column">
                   <h4 className="skills-title">UX Design</h4>
                   <ul className="skills-list">
                     <li>User Research</li>
@@ -105,7 +157,7 @@ const About = () => {
                   </ul>
                 </div>
                 
-                <div className="skills-column">
+                <div ref={el => skillsColumnsRef.current[3] = el} className="skills-column">
                   <h4 className="skills-title">Languages</h4>
                   <ul className="skills-list">
                     <li>English</li>
@@ -116,7 +168,7 @@ const About = () => {
               </div>
             </div>
             
-            <div className="about-timeline">
+            <div ref={timelineRef} className="about-timeline">
               <div className="timeline-section">
                 <h4 className="timeline-title">Experience</h4>
                 <div className="timeline-item">
